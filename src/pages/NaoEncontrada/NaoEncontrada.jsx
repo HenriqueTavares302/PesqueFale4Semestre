@@ -6,24 +6,10 @@ import { registrarEvento } from "../../analytics";
 import logo from "../../assets/image/logo/logo.jpg";
 import "./naoEncontrada.css";
 
-/*
- * Rota não encontrada.
- *
- * Antes desta página, um caminho inexistente — um link com erro de
- * digitação, um endereço antigo compartilhado — não combinava com nenhuma
- * rota e o React Router não renderizava nada: tela em branco, sem
- * explicação e sem caminho de volta.
- *
- * A página leva noindex: endereço quebrado não deve entrar no índice do
- * Google. O evento no GA4 é o lado útil disso — o relatório mostra quais
- * URLs quebradas as pessoas estão alcançando, e de onde vieram.
- */
 function NaoEncontrada() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  /* Dentro do efeito, e não no corpo do componente: no corpo o evento
-   * seria enviado de novo a cada nova renderização. */
   useEffect(() => {
     registrarEvento("pagina_nao_encontrada", { caminho: pathname });
   }, [pathname]);

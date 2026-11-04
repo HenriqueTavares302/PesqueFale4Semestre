@@ -453,9 +453,6 @@ const Home = () => {
     return () => ro.disconnect();
   }, []);
 
-  /* ── Catálogo (API + reserva local) ──
-   * Antes estes dois arrays estavam escritos à mão aqui. Agora vêm do
-   * MySQL pela API; a reserva local entra se ela não responder. */
   const { eventos, pesqueiros: locais, origem: origemCatalogo } = useCatalogo();
 
   /* ── Tour ── */
@@ -700,9 +697,6 @@ const Home = () => {
   );
 
   /* ── Carrossel ── */
-  /* A API pode devolver uma quantidade diferente da reserva local. Se o
-   * índice atual ficar fora da nova lista, o carrossel aponta para um
-   * item que não existe, então ele volta ao começo. */
   useEffect(() => {
     if (eventoIndex >= eventos.length) setEventoIndex(0);
   }, [eventos.length, eventoIndex]);
@@ -748,8 +742,6 @@ const Home = () => {
   /* ── JSX principal ── */
   return (
     <Layout>
-      {/* O feed exige login: noindex para o buscador não indexar a tela de
-          carregamento que ele receberia. */}
       <Seo
         titulo="Feed"
         descricao="Acompanhe publicações, torneios e pesqueiros em destaque."
@@ -795,8 +787,6 @@ const Home = () => {
 
         <main
           className="main-content"
-          /* De onde veio o catálogo: "api" ou "reserva". Visível no
-             inspetor, útil para conferir se a API respondeu. */
           data-catalogo={origemCatalogo}
           style={{
             paddingTop: stickyHeight ? `${stickyHeight + 8}px` : undefined,
@@ -812,8 +802,6 @@ const Home = () => {
                 className={`feed-tab ${activeTab === tab.id ? "active" : ""}`}
                 onClick={() => {
                   setActiveTab(tab.id);
-                  /* Qual aba o pescador abre mais: dado de produto que o
-                     GA4 responde, e o Firebase não. */
                   registrarEvento("selecionar_aba_feed", { aba: tab.id });
                 }}
               >

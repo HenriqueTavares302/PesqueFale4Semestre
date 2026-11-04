@@ -1,17 +1,3 @@
-/*
- * Conteúdo de reserva do catálogo.
- *
- * São os mesmos dados que antes estavam escritos à mão dentro de Home.jsx.
- * Agora eles vivem no MySQL e chegam pela API, mas continuam aqui por um
- * motivo: se a API estiver fora do ar, a Home mostra este conteúdo em vez de
- * um carrossel vazio. O visitante não vê a falha.
- *
- * O mapa de imagens traduz o nome de arquivo gravado no banco
- * ("evento1.jpg") para o módulo que o empacotador gera. Não é possível
- * montar esse caminho por concatenação: o Webpack precisa ver o import
- * escrito para incluir o arquivo no build.
- */
-
 import imgEvento1 from "../assets/image/eventos/evento1.jpg";
 import imgEvento2 from "../assets/image/eventos/evento2.jpg";
 import imgEvento3 from "../assets/image/eventos/evento3.jpg";
@@ -26,8 +12,6 @@ export const IMAGENS_CATALOGO = {
   "recanto_pescador.jpg": imgRecantoPescador,
 };
 
-/* Primeira imagem como padrão, para um registro novo cadastrado pela API
- * sem imagem não aparecer com o espaço quebrado. */
 export const IMAGEM_PADRAO = imgPesqueiro311;
 
 export function resolverImagem(nome) {

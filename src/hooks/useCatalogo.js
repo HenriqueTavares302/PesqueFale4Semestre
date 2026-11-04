@@ -7,20 +7,6 @@ import {
   resolverImagem,
 } from "../data/catalogoReserva";
 
-/*
- * Busca eventos e pesqueiros na API do catálogo.
- *
- * A regra central: se a requisição falhar, por qualquer motivo, o hook
- * devolve o conteúdo de reserva em vez de lista vazia. A tela nunca piora
- * em relação ao que era antes da API existir — ela só melhora quando a API
- * responde.
- *
- * Devolve { eventos, pesqueiros, carregando, origem }, em que origem é
- * "api" ou "reserva". Serve para o componente mostrar um aviso discreto, se
- * quiser, e para a conferência durante o desenvolvimento.
- */
-
-/* O banco grava 2025-05-10; a tela mostra 10/05/2025. */
 function formatarData(valor) {
   if (!valor) return "";
   const texto = String(valor).slice(0, 10);
@@ -29,8 +15,6 @@ function formatarData(valor) {
   return `${dia}/${mes}/${ano}`;
 }
 
-/* Adapta o formato da API ao que o carrossel da Home já espera, para que
- * nenhum trecho do JSX precise mudar. */
 function adaptarEvento(evento) {
   return {
     id: evento.id,
@@ -66,7 +50,6 @@ export function useCatalogo() {
 
     async function buscar() {
       try {
-        /* As duas em paralelo: uma não espera a outra. */
         const [listaEventos, listaPesqueiros] = await Promise.all([
           api.eventos.listar(),
           api.pesqueiros.listar(),
@@ -74,8 +57,6 @@ export function useCatalogo() {
 
         if (!ativo) return;
 
-        /* Lista vazia também mantém a reserva: um banco recém-criado não
-         * deve deixar a Home sem conteúdo. */
         if (Array.isArray(listaEventos) && listaEventos.length > 0) {
           setEventos(listaEventos.map(adaptarEvento));
         }
@@ -85,8 +66,6 @@ export function useCatalogo() {
         setOrigem("api");
       } catch (erro) {
         if (!ativo) return;
-        /* Aviso no console, não na tela: o visitante não tem nada a fazer
-         * com essa informação, e a reserva já está sendo exibida. */
         console.info(
           "Catálogo: API indisponível, usando conteúdo local.",
           erro.message,
@@ -99,7 +78,6 @@ export function useCatalogo() {
 
     buscar();
 
-    /* Evita gravar estado depois que o componente saiu da tela. */
     return () => {
       ativo = false;
     };

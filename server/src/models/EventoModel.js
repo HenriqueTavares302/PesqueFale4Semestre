@@ -1,10 +1,5 @@
 const { pool } = require("../database/conexao");
 
-/*
- * O LEFT JOIN traz o nome do pesqueiro junto com o evento, para o front não
- * precisar de uma segunda requisição por evento (o problema de N+1 consultas
- * que a aula de escalabilidade levanta).
- */
 const SELECT_BASE = `
   SELECT e.*, p.nome AS pesqueiro_nome, p.slug AS pesqueiro_slug
     FROM eventos e
@@ -19,7 +14,6 @@ const EventoModel = {
     return linhas;
   },
 
-  /* Só os que ainda não aconteceram: é o que a Home mostra no carrossel. */
   async listarFuturos() {
     const [linhas] = await pool.query(
       `${SELECT_BASE} WHERE e.data_evento >= CURDATE() ORDER BY e.data_evento ASC`,

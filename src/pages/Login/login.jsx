@@ -67,9 +67,6 @@ const handleLogin = async (e) => {
 
     const onboardingFeito = await verificarOnboarding(uid);
 
-    /* Só o método, nunca o e-mail ou o uid: identificar a pessoa dentro do
-       relatório do Google não é o objetivo e seria dado pessoal saindo do
-       Firebase sem necessidade. */
     registrarEvento(EVENTOS.LOGIN, { method: "email" });
 
     if (onboardingFeito) {
@@ -102,8 +99,6 @@ const handleLogin = async (e) => {
       await registerWithEmail(registerData.email, registerData.password, registerData.name);
       await updateUserName(registerData.name);
 
-      /* Quantas contas nascem por dia é a métrica que mede se a landing
-         page está convertendo — o que o relatório de SEO precisa saber. */
       registrarEvento(EVENTOS.CADASTRO, { method: "email" });
 
       // Redireciona imediatamente após o cadastro (loading já no botão)

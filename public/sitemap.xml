@@ -1,14 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Sitemap das páginas fixas do site.
-
-  Só entram aqui os endereços públicos. As telas que exigem login ficam de
-  fora: pedir ao Google que indexe uma página que ele não consegue abrir
-  gera erro de cobertura no Search Console.
-
-  Os eventos e pesqueiros, que mudam com o tempo, estão no sitemap gerado
-  pela API em /sitemap-catalogo.xml, listado no robots.txt.
--->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://pesqueefaledb.web.app/</loc>

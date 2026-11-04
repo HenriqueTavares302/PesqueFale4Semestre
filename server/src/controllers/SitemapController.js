@@ -1,19 +1,6 @@
 const EventoModel = require("../models/EventoModel");
 const PesqueiroModel = require("../models/PesqueiroModel");
 
-/*
- * Sitemap gerado a partir do banco (aula de SEO e Web Analytics).
- *
- * Um sitemap.xml escrito à mão envelhece: cada evento novo exigiria editar o
- * arquivo. Como os eventos e pesqueiros estão no MySQL, o XML pode ser
- * montado na hora, e o Google sempre recebe a lista atual.
- *
- * O arquivo estático em public/sitemap.xml continua existindo e cobre as
- * páginas fixas do site; este endereço complementa com o conteúdo do
- * catálogo.
- */
-
-/* & < > " ' quebram o XML e precisam virar entidade. */
 function escaparXml(texto) {
   return String(texto)
     .replace(/&/g, "&amp;")
@@ -75,8 +62,6 @@ ${corpo}
 `;
 
       res.type("application/xml");
-      /* Uma hora de cache: o buscador não precisa de atualização ao segundo
-       * e isso evita uma consulta ao banco a cada visita de robô. */
       res.set("Cache-Control", "public, max-age=3600");
       return res.send(xml);
     } catch (erro) {

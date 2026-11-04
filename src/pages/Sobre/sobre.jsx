@@ -92,7 +92,6 @@ const SobreNos = () => {
 
   return (
     <Layout>
-      {/* noindex: a rota exige login, então o robô veria uma tela vazia. */}
       <Seo
         titulo="Sobre o projeto"
         descricao="Conheça a equipe e a proposta do Pesque & Fale."

@@ -99,9 +99,6 @@ export default function NovaPublicacao() {
         posts: arrayUnion(novoPost),
       });
 
-      /* Mede o uso do recurso, não o conteúdo: quantas tags, se tem foto e
-         se foi avaliado. A descrição e o local digitados pelo usuário não
-         são enviados ao Google. */
       registrarEvento(EVENTOS.PUBLICACAO_CRIADA, {
         tem_foto: Boolean(fotoPreview),
         quantidade_tags: tagsSelecionadas.length,

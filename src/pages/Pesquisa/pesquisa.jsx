@@ -268,10 +268,6 @@ export default function Pesquisar() {
     fetchData();
   }, []);
 
-  /* Evento de busca para o GA4.
-     A filtragem é reativa, letra por letra: enviar um evento a cada tecla
-     registraria "t", "tu", "tuc" e inundaria o relatório. O atraso de um
-     segundo faz com que só o termo final, depois da pausa, seja enviado. */
   useEffect(() => {
     const termo = searchTerm.trim();
     if (termo.length < 3) return;

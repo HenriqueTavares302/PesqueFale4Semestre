@@ -4,11 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Favicon
-         Os nomes aqui precisam bater exatamente com os arquivos em public/.
-         Antes este bloco apontava para "Favicon.ico" e
-         "logofavicon-32x32.png", que não existem: o navegador recebia 404 e
-         caía no ícone genérico. -->
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" sizes="any" />
     <link
       rel="icon"
@@ -23,13 +18,6 @@
     />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-    <!-- ── SEO ──
-         title e description são o que aparece no resultado de busca. A
-         description não influencia a posição, mas decide se a pessoa
-         clica, e o Google corta por volta de 160 caracteres.
-         O componente src/components/Seo/Seo.jsx reescreve estas tags por
-         rota; os valores abaixo são o que vale para a página inicial e o
-         que os robôs sem JavaScript leem. -->
     <title>Pesque & Fale — Encontre os melhores pontos de pesca</title>
     <meta
       name="description"
@@ -39,14 +27,8 @@
     <meta name="author" content="Pesque & Fale" />
     <meta name="theme-color" content="#062A6C" />
 
-    <!-- Endereço oficial da página. Sem ele, o mesmo conteúdo acessado com
-         ?utm_source=... conta como página duplicada. -->
     <link rel="canonical" href="https://pesqueefaledb.web.app/" />
 
-    <!-- ── Open Graph ──
-         Usado na prévia do link no WhatsApp, Facebook e LinkedIn. Fica no
-         HTML, e não só no JavaScript, porque esses robôs não executam
-         JavaScript: eles leem apenas o que o servidor entrega. -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Pesque & Fale" />
     <meta
@@ -65,8 +47,6 @@
     <meta property="og:image:alt" content="Logotipo do Pesque & Fale" />
     <meta property="og:locale" content="pt_BR" />
 
-    <!-- Twitter/X usa o próprio conjunto de tags. summary_large_image rende
-         a prévia com imagem grande. -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
@@ -81,9 +61,6 @@
       content="https://pesqueefaledb.web.app/favicon-512x512.png"
     />
 
-    <!-- Dados estruturados em JSON-LD.
-         Descrevem o site em vocabulário que o buscador entende, o que
-         habilita a caixa de busca do site nos resultados. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -103,12 +80,6 @@
       }
     </script>
 
-    <!-- ── Google Analytics 4 ──
-         O Create React App substitui %REACT_APP_GA_ID% pelo valor do .env
-         durante o build. O teste antes de carregar a tag existe porque, sem
-         a variável definida, o texto fica literal e o navegador tentaria
-         buscar um script com "%REACT_APP_GA_ID%" na URL.
-         O envio em si fica em src/analytics.js. -->
     <script>
       (function () {
         var id = "%REACT_APP_GA_ID%";
@@ -120,9 +91,6 @@
         };
         window.gtag("js", new Date());
 
-        /* send_page_view desligado de propósito: quem conta as páginas é o
-           componente RastreioDeRotas, a cada troca de rota. Deixar os dois
-           ligados contaria a primeira visita duas vezes. */
         window.gtag("config", id, { send_page_view: false });
 
         var tag = document.createElement("script");

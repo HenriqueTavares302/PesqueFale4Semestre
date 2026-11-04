@@ -1,9 +1,5 @@
 const { pool } = require("../database/conexao");
 
-/*
- * Todo o SQL fica nos models. Os controllers não sabem qual banco está por
- * trás: se um dia o MySQL for trocado, só este arquivo muda.
- */
 const UsuarioModel = {
   async criar({ nome, email, senha, papel }) {
     const [resultado] = await pool.query(
@@ -21,7 +17,6 @@ const UsuarioModel = {
     return linhas[0] || null;
   },
 
-  /* Sem a coluna senha: este retorno vai para o navegador. */
   async buscarPorId(id) {
     const [linhas] = await pool.query(
       "SELECT id, nome, email, papel, criado_em FROM usuarios WHERE id = ? LIMIT 1",

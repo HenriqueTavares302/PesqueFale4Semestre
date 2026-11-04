@@ -1,17 +1,3 @@
-/*
- * Todas as chamadas à API do catálogo ficam neste arquivo.
- *
- * Os componentes não montam URL nem leem cabeçalho de resposta: pedem
- * api.eventos.listar() e recebem os dados. Se o endereço da API mudar, só
- * este arquivo muda.
- *
- * Importante: esta API cuida apenas do catálogo público (eventos e
- * pesqueiros). Login do aplicativo, publicações, chat e notificações
- * continuam no Firebase, em src/auth.js e src/firebase.js.
- */
-
-/* Create React App só expõe variáveis que começam com REACT_APP_.
- * Em produção, atrás do Nginx, o valor é "/api" — mesma origem, sem CORS. */
 const BASE = (process.env.REACT_APP_API_URL || "http://localhost:3001").replace(
   /\/+$/,
   "",
@@ -23,7 +9,6 @@ export function guardarToken(token) {
   try {
     localStorage.setItem(CHAVE_TOKEN, token);
   } catch {
-    /* navegação privada pode bloquear o localStorage */
   }
 }
 
@@ -39,17 +24,9 @@ export function descartarToken() {
   try {
     localStorage.removeItem(CHAVE_TOKEN);
   } catch {
-    /* nada a fazer */
   }
 }
 
-/*
- * Requisição com tempo limite.
- *
- * Sem o AbortController, uma API fora do ar deixa a tela carregando para
- * sempre. Oito segundos e o fetch é cancelado, para o componente poder cair
- * no conteúdo de reserva.
- */
 async function requisitar(caminho, { metodo = "GET", corpo, token } = {}) {
   const controle = new AbortController();
   const limite = setTimeout(() => controle.abort(), 8000);
@@ -68,7 +45,6 @@ async function requisitar(caminho, { metodo = "GET", corpo, token } = {}) {
       signal: controle.signal,
     });
 
-    /* 204 não tem corpo: ler JSON daria erro de parse. */
     if (resposta.status === 204) return null;
 
     const tipo = resposta.headers.get("content-type") || "";
@@ -98,7 +74,6 @@ async function requisitar(caminho, { metodo = "GET", corpo, token } = {}) {
 }
 
 export const api = {
-  /* Usado para saber se a API está no ar antes de depender dela. */
   saude: () => requisitar("/health"),
 
   auth: {

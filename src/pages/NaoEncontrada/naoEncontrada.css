@@ -1,7 +1,3 @@
-/* Página de rota não encontrada.
-   Usa a paleta do projeto: #062A6C como azul principal e #90caf9 como
-   azul claro, e acompanha o body.dark-mode como as demais telas. */
-
 .nf-container {
   min-height: 100vh;
   display: flex;
@@ -51,8 +47,6 @@
   margin-bottom: 28px;
 }
 
-/* O caminho pode ser longo e sem espaço: sem o break-all ele estoura o
-   cartão no celular. */
 .nf-caminho {
   display: inline-block;
   max-width: 100%;
@@ -98,9 +92,6 @@
   border-color: #0a3d8f;
 }
 
-/* A borda vem declarada junto da classe base para ganhar em especificidade:
-   uma regra genérica de botão com border:none venceria .nf-btn-secundario
-   sozinha e o botão apareceria sem contorno. */
 .nf-btn.nf-btn-secundario {
   background: transparent;
   color: #062a6c;
@@ -112,13 +103,11 @@
   background: #f1f1f1;
 }
 
-/* Contorno visível para quem navega pelo teclado. */
 .nf-btn:focus-visible {
   outline: 3px solid #90caf9;
   outline-offset: 2px;
 }
 
-/* ── Modo escuro ── */
 body.dark-mode .nf-container {
   background: linear-gradient(160deg, #0b1220 0%, #1e1e1e 100%);
 }
@@ -171,7 +160,6 @@ body.dark-mode .nf-btn.nf-btn-secundario:hover {
     font-size: 3.2rem;
   }
 
-  /* Botões em coluna, ocupando a largura: alvo de toque maior. */
   .nf-acoes {
     flex-direction: column;
   }

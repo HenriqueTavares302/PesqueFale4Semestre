@@ -1,22 +1,3 @@
-/*
- * Modelo de configuração do Firebase.
- *
- * O arquivo real, src/firebase.js, está listado no .gitignore e por isso
- * não vem no repositório nem no zip do projeto. Sem ele a aplicação não
- * compila: auth.js, Home.jsx, pesquisa.jsx e as demais telas importam o db
- * e o auth daqui.
- *
- * Para rodar o projeto: copie este arquivo para src/firebase.js e preencha
- * os valores do seu projeto, que ficam em
- * console.firebase.google.com → Configurações do projeto → Seus aplicativos.
- *
- * Sobre essas chaves: elas não são segredo. A apiKey do Firebase vai para o
- * navegador de qualquer jeito e serve apenas para identificar o projeto. O
- * que protege os dados são as regras de segurança do Firestore, no console.
- * Mesmo assim o arquivo fica fora do Git, para que o projeto de um
- * integrante não escreva no banco de outro por engano.
- */
-
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";

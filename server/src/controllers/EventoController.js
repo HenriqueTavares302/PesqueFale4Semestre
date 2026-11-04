@@ -1,7 +1,6 @@
 const EventoModel = require("../models/EventoModel");
 const { gerarSlug, idValido, ouNulo } = require("../utils/texto");
 
-/* Aceita 2025-05-10 e devolve o mesmo formato, que é o que o MySQL grava. */
 function dataValida(valor) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(String(valor))) return null;
   const data = new Date(`${valor}T00:00:00Z`);
@@ -20,7 +19,6 @@ function validarCorpo(corpo) {
 }
 
 const EventoController = {
-  /* Rota pública. ?futuros=1 traz só os que ainda vão acontecer. */
   async listar(req, res) {
     try {
       const eventos =
@@ -34,7 +32,6 @@ const EventoController = {
     }
   },
 
-  /* Aceita id numérico ou slug, para que a URL possa ser legível. */
   async buscar(req, res) {
     const { id } = req.params;
 

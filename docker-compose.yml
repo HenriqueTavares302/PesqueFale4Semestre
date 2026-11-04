@@ -1,16 +1,4 @@
-# Os três serviços do projeto em um comando: docker compose up -d
-#
-# Fazer isso à mão exigiria criar a rede, subir o MySQL, esperar que ele
-# aceitasse conexão, subir a API com as variáveis certas e depois o Nginx.
-# Aqui a ordem e a ligação entre eles estão declaradas.
-#
-# Vale notar o que NÃO está aqui: o Firebase. Autenticação, publicações,
-# chat e notificações continuam em serviço gerenciado do Google, fora destes
-# containers. O que subiu para cá é o catálogo público — eventos e
-# pesqueiros — que antes estava escrito à mão dentro do Home.jsx.
-
 services:
-  # ── Banco de dados ────────────────────────────────────────────────
   banco:
     image: mysql:8.0
     container_name: pf-banco
@@ -18,31 +6,14 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-senha_de_desenvolvimento}
       MYSQL_DATABASE: ${DB_NAME:-pesque_fale}
-    # utf8mb4 na linha de comando do servidor, não só na tabela: sem isso a
-    # conexão pode negociar latin1 e "Tucunaré" chega truncado no banco.
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
     volumes:
-      # Volume nomeado: os dados sobrevivem a docker compose down. Sem ele,
-      # derrubar os containers apagaria o banco inteiro.
       - dados_mysql:/var/lib/mysql
-    # A porta é publicada só para dar acesso ao MySQL Workbench durante o
-    # desenvolvimento. O número da esquerda é a porta na máquina; a da
-    # direita é dentro do container e não muda.
-    #
-    # 3308 porque a 3306 é do MySQL instalado no Windows e a 3307 é de outro
-    # projeto. A API não usa esta porta: ela fala com o banco pela rede
-    # interna do Docker.
-    #
-    # Em produção esta seção sai: expor o banco na internet é convite a
-    # tentativa de invasão.
     ports:
       - "${PORTA_BANCO:-3308}:3306"
     healthcheck:
-      # O MySQL leva alguns segundos para aceitar conexão depois de o
-      # container iniciar. Sem esta verificação, a API tentaria conectar
-      # antes da hora e morreria no começo.
       test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-p$$MYSQL_ROOT_PASSWORD"]
       interval: 10s
       timeout: 5s
@@ -51,7 +22,6 @@ services:
     networks:
       - rede_pf
 
-  # ── API do catálogo ───────────────────────────────────────────────
   api:
     build:
       context: ./server
@@ -59,9 +29,6 @@ services:
     container_name: pf-api
     restart: unless-stopped
     environment:
-      # "banco" é o nome do serviço acima. O Docker resolve esse nome para o
-      # IP do container, que muda a cada reinício — por isso não se escreve
-      # o IP.
       DB_HOST: banco
       DB_PORT: 3306
       DB_USER: root
@@ -69,31 +36,20 @@ services:
       DB_NAME: ${DB_NAME:-pesque_fale}
       PORT: 3001
       URL_SITE: ${URL_SITE:-http://localhost}
-      # Como o Nginx repassa /api para cá, a origem que o navegador vê é a
-      # do próprio site.
       ORIGENS_PERMITIDAS: ${ORIGENS_PERMITIDAS:-http://localhost,http://localhost:3000}
       JWT_SEGREDO: ${JWT_SEGREDO:?defina JWT_SEGREDO no arquivo .env}
       CODIGO_ADMIN: ${CODIGO_ADMIN:-troque_este_codigo}
     depends_on:
       banco:
-        # Espera o healthcheck do banco passar, não apenas o container
-        # existir. É a diferença entre "o MySQL subiu" e "o MySQL aceita
-        # conexão".
         condition: service_healthy
     networks:
       - rede_pf
-    # Nenhuma porta publicada: a API é alcançada só pelo Nginx, pela rede
-    # interna. Quem precisar testá-la direto pode descomentar.
-    # ports:
-    #   - "3001:3001"
 
-  # ── Front-end servido pelo Nginx ──────────────────────────────────
   web:
     build:
       context: .
       dockerfile: Dockerfile
       args:
-        # /api é relativo de propósito: mesma origem do site, sem CORS.
         REACT_APP_API_URL: /api
         REACT_APP_URL_SITE: ${URL_SITE:-http://localhost}
         REACT_APP_GA_ID: ${REACT_APP_GA_ID:-}

@@ -37,8 +37,6 @@ function AppRoutes() {
 
   return (
     <BrowserRouter>
-      {/* Envia page_view ao GA4 a cada troca de rota. Fica aqui dentro
-          porque depende do useLocation, que só existe sob o Router. */}
       <RastreioDeRotas />
 
       <Routes>
@@ -149,9 +147,6 @@ function AppRoutes() {
           }
         />
 
-        {/* Qualquer caminho não declarado acima.
-            Antes esta rota não existia: um link com erro de digitação
-            deixava a tela em branco, sem aviso e sem saída. */}
         <Route path="*" element={<NaoEncontrada />} />
 
       </Routes>

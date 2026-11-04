@@ -145,8 +145,6 @@ const Index = () => {
 
   return (
     <>
-      {/* Esta é a única página que um visitante sem conta alcança, então é
-          a que o buscador realmente indexa. */}
       <Seo
         tituloBruto="Pesque & Fale — Encontre os melhores pontos de pesca"
         descricao="Rede social para pescadores: descubra pesqueiros avaliados, acompanhe torneios e compartilhe suas melhores pescarias."

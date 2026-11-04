@@ -15,14 +15,6 @@ function gerarToken(usuario) {
 }
 
 const AuthController = {
-  /*
-   * Cadastro de quem administra o catálogo.
-   *
-   * O papel não é aceito livremente: se o usuário pudesse escolher "admin"
-   * no próprio cadastro, todo o controle de permissão não valeria nada.
-   * Para virar admin é preciso o código que fica só no .env do servidor e
-   * nunca chega ao navegador.
-   */
   async registrar(req, res) {
     const { nome, email, senha, papel = "editor", codigo } = req.body || {};
 
@@ -53,8 +45,6 @@ const AuthController = {
         return res.status(409).json({ erro: "Este e-mail já está cadastrado." });
       }
 
-      /* bcrypt gera um salt por usuário: duas senhas iguais viram hashes
-       * diferentes, e não há como voltar do hash para a senha original. */
       const hash = await bcrypt.hash(senha, CUSTO_HASH);
       const usuario = await UsuarioModel.criar({
         nome,
@@ -80,8 +70,6 @@ const AuthController = {
     try {
       const usuario = await UsuarioModel.buscarPorEmail(email);
 
-      /* A mesma mensagem para e-mail inexistente e senha errada: dizer qual
-       * dos dois falhou entregaria quais e-mails existem na base. */
       const senhaCorreta =
         usuario && (await bcrypt.compare(senha, usuario.senha));
 
@@ -103,8 +91,6 @@ const AuthController = {
     }
   },
 
-  /* Devolve o usuário do token. Serve para o front saber se a sessão ainda
-   * vale ao recarregar a página. */
   async eu(req, res) {
     try {
       const usuario = await UsuarioModel.buscarPorId(req.usuario.id);

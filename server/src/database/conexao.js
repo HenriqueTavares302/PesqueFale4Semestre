@@ -1,14 +1,5 @@
 const mysql = require("mysql2/promise");
 
-/*
- * Pool de conexões.
- *
- * Um pool reaproveita conexões já abertas em vez de abrir e fechar uma a
- * cada consulta. Com connectionLimit 10, no máximo dez consultas correm em
- * paralelo e as demais ficam na fila, o que evita derrubar o MySQL sob
- * carga — o mesmo raciocínio de capacidade da aula de arquiteturas
- * escaláveis.
- */
 const pool = mysql.createPool({
   host: process.env.DB_HOST || "localhost",
   port: Number(process.env.DB_PORT) || 3306,
@@ -21,7 +12,6 @@ const pool = mysql.createPool({
   charset: "utf8mb4_unicode_ci",
 });
 
-/* Usada pelo /health: confirma que o banco responde. */
 async function verificarConexao() {
   const conexao = await pool.getConnection();
   try {

@@ -10,17 +10,6 @@ const UsuarioModel = require("../models/UsuarioModel");
 const EventoModel = require("../models/EventoModel");
 const PesqueiroModel = require("../models/PesqueiroModel");
 
-/*
- * Carga inicial do banco.
- *
- * Os dados abaixo são exatamente os que estavam escritos à mão dentro de
- * Home.jsx, sob o comentário "Dados estáticos". Saem do componente e passam
- * a viver no MySQL, de onde o front os busca pela API.
- *
- * Rodar de novo não duplica nada: cada bloco só insere se a tabela estiver
- * vazia.
- */
-
 const PESQUEIROS = [
   {
     nome: "Lago Azul",
@@ -78,8 +67,6 @@ const EVENTOS = [
   },
 ];
 
-/* Conta de demonstração, para a API poder ser avaliada sem cadastro manual.
- * Senha simples de propósito: não deve existir fora de desenvolvimento. */
 const CONTA_DEMO = {
   nome: "Administrador de Demonstração",
   email: "admin@pesquefale.local",
@@ -108,7 +95,6 @@ async function semearEventos() {
     return;
   }
 
-  /* Liga cada evento ao pesqueiro de mesmo nome, quando existir. */
   const pesqueiros = await PesqueiroModel.listar();
 
   for (const e of EVENTOS) {

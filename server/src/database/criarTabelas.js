@@ -1,17 +1,5 @@
 const { pool } = require("./conexao");
 
-/*
- * Criação das tabelas.
- *
- * Todas usam utf8mb4 para que acento e cedilha sejam gravados corretamente —
- * "Tucunaré" e "Avaliação" quebram em latin1.
- *
- * Observação importante sobre o escopo: estas tabelas guardam apenas o
- * catálogo público (eventos e pesqueiros) e as contas que administram esse
- * catálogo. Usuários do aplicativo, publicações, chat e notificações
- * continuam no Firebase, que já cuida disso.
- */
-
 const USUARIOS = `
 CREATE TABLE IF NOT EXISTS usuarios (
   id        INT AUTO_INCREMENT PRIMARY KEY,
@@ -58,7 +46,6 @@ CREATE TABLE IF NOT EXISTS eventos (
 `;
 
 async function criarTabelas() {
-  /* A ordem importa: eventos tem chave estrangeira para pesqueiros. */
   await pool.query(USUARIOS);
   await pool.query(PESQUEIROS);
   await pool.query(EVENTOS);
