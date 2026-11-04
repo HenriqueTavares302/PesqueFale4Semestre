@@ -16,9 +16,21 @@ FROM node:22-alpine AS construcao
 WORKDIR /app
 
 COPY package*.json ./
+
 # Aqui as dependências de desenvolvimento são necessárias: o react-scripts,
 # que faz o build, é uma delas.
-RUN npm ci
+#
+# O certo seria `npm ci`, que instala as versões exatas do package-lock.json
+# e faz a imagem sair idêntica em qualquer máquina. Ele não funciona neste
+# projeto: o react-scripts 5.0.1 é de 2022 e declara o TypeScript como peer
+# dependency na faixa ^3 || ^4, mas a árvore de dependências hoje resolve
+# para typescript 7. O npm ci recusa esse conflito, que é exatamente a
+# função dele; o npm install aceita com aviso.
+#
+# A solução de verdade é migrar do Create React App para o Vite, que é
+# mantido. Enquanto isso não acontece, --legacy-peer-deps destrava o build
+# ao custo de perder a garantia de reprodutibilidade.
+RUN npm install --legacy-peer-deps
 
 COPY . .
 

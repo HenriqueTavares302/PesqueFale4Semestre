@@ -27,12 +27,18 @@ services:
       # Volume nomeado: os dados sobrevivem a docker compose down. Sem ele,
       # derrubar os containers apagaria o banco inteiro.
       - dados_mysql:/var/lib/mysql
-    # A porta é publicada para dar acesso ao MySQL Workbench durante o
-      # desenvolvimento. Em produção esta linha sai: a API fala com o banco
-      # pela rede interna do Docker, e expor o 3306 na internet é convite a
-      # tentativa de invasão.
+    # A porta é publicada só para dar acesso ao MySQL Workbench durante o
+    # desenvolvimento. O número da esquerda é a porta na máquina; a da
+    # direita é dentro do container e não muda.
+    #
+    # 3308 porque a 3306 é do MySQL instalado no Windows e a 3307 é de outro
+    # projeto. A API não usa esta porta: ela fala com o banco pela rede
+    # interna do Docker.
+    #
+    # Em produção esta seção sai: expor o banco na internet é convite a
+    # tentativa de invasão.
     ports:
-      - "3306:3306"
+      - "${PORTA_BANCO:-3308}:3306"
     healthcheck:
       # O MySQL leva alguns segundos para aceitar conexão depois de o
       # container iniciar. Sem esta verificação, a API tentaria conectar
