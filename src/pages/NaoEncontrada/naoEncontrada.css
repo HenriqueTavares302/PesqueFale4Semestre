@@ -1,0 +1,188 @@
+/* Página de rota não encontrada.
+   Usa a paleta do projeto: #062A6C como azul principal e #90caf9 como
+   azul claro, e acompanha o body.dark-mode como as demais telas. */
+
+.nf-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  background: linear-gradient(160deg, #062a6c 0%, #0a3d8f 100%);
+}
+
+.nf-card {
+  width: 100%;
+  max-width: 460px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: 0 18px 44px rgba(6, 42, 108, 0.28);
+}
+
+.nf-logo {
+  width: 76px;
+  height: 76px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.nf-codigo {
+  font-family: "Anton", "Poppins", sans-serif;
+  font-size: 4rem;
+  line-height: 1;
+  color: #90caf9;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.nf-titulo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #062a6c;
+  margin-bottom: 12px;
+}
+
+.nf-texto {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-bottom: 28px;
+}
+
+/* O caminho pode ser longo e sem espaço: sem o break-all ele estoura o
+   cartão no celular. */
+.nf-caminho {
+  display: inline-block;
+  max-width: 100%;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: #f1f1f1;
+  color: #062a6c;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.85em;
+  word-break: break-all;
+}
+
+.nf-acoes {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.nf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 10px;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.nf-btn-primario {
+  background: #062a6c;
+  color: #ffffff;
+  border: 2px solid #062a6c;
+}
+
+.nf-btn-primario:hover {
+  background: #0a3d8f;
+  border-color: #0a3d8f;
+}
+
+/* A borda vem declarada junto da classe base para ganhar em especificidade:
+   uma regra genérica de botão com border:none venceria .nf-btn-secundario
+   sozinha e o botão apareceria sem contorno. */
+.nf-btn.nf-btn-secundario {
+  background: transparent;
+  color: #062a6c;
+  border: 2px solid #cbd5e1;
+}
+
+.nf-btn.nf-btn-secundario:hover {
+  border-color: #062a6c;
+  background: #f1f1f1;
+}
+
+/* Contorno visível para quem navega pelo teclado. */
+.nf-btn:focus-visible {
+  outline: 3px solid #90caf9;
+  outline-offset: 2px;
+}
+
+/* ── Modo escuro ── */
+body.dark-mode .nf-container {
+  background: linear-gradient(160deg, #0b1220 0%, #1e1e1e 100%);
+}
+
+body.dark-mode .nf-card {
+  background: #2a2a2a;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+}
+
+body.dark-mode .nf-titulo {
+  color: #e2e8f0;
+}
+
+body.dark-mode .nf-texto {
+  color: #94a3b8;
+}
+
+body.dark-mode .nf-caminho {
+  background: #1e1e1e;
+  color: #90caf9;
+}
+
+body.dark-mode .nf-btn-primario {
+  background: #90caf9;
+  border-color: #90caf9;
+  color: #062a6c;
+}
+
+body.dark-mode .nf-btn-primario:hover {
+  background: #93b4f0;
+  border-color: #93b4f0;
+}
+
+body.dark-mode .nf-btn.nf-btn-secundario {
+  color: #e2e8f0;
+  border-color: #475569;
+}
+
+body.dark-mode .nf-btn.nf-btn-secundario:hover {
+  border-color: #90caf9;
+  background: #1e1e1e;
+}
+
+@media (max-width: 480px) {
+  .nf-card {
+    padding: 32px 20px;
+  }
+
+  .nf-codigo {
+    font-size: 3.2rem;
+  }
+
+  /* Botões em coluna, ocupando a largura: alvo de toque maior. */
+  .nf-acoes {
+    flex-direction: column;
+  }
+
+  .nf-btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nf-btn {
+    transition: none;
+  }
+}

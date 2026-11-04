@@ -1,0 +1,36 @@
+# Tudo listado aqui fica fora do contexto enviado ao Docker.
+#
+# Vale por dois motivos. O node_modules pesa centenas de megabytes e seria
+# sobrescrito pelo npm ci de qualquer forma — copiá-lo só deixa o build
+# lento. E o .env guarda chave e senha: dentro da imagem, qualquer um com
+# acesso a ela leria o arquivo.
+
+node_modules
+build
+.git
+.gitignore
+
+# Segredos
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+server/.env
+
+# A API tem o próprio Dockerfile e o próprio contexto.
+server/node_modules
+
+# Logs e arquivos de sistema
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode
+.idea
+
+# Firebase
+.firebase

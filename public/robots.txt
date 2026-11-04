@@ -1,0 +1,23 @@
+# https://www.robotstxt.org/robotstxt.html
+# Robots.txt do Pesque & Fale
+
+User-agent: *
+
+# Páginas que exigem login não têm o que mostrar a um buscador: o robô
+# receberia a tela de carregamento e indexaria uma página vazia.
+Disallow: /perfil
+Disallow: /perfil/editar
+Disallow: /publicar
+Disallow: /notificacao
+Disallow: /chat
+Disallow: /post
+Disallow: /onboarding
+
+# O resto é liberado.
+Allow: /
+
+# Onde estão os endereços do site.
+# O primeiro é fixo e cobre as páginas do site; o segundo é gerado pela API
+# a partir do banco, e traz os eventos e pesqueiros cadastrados.
+Sitemap: https://pesqueefaledb.web.app/sitemap.xml
+Sitemap: https://pesqueefaledb.web.app/sitemap-catalogo.xml
